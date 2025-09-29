@@ -1,0 +1,84 @@
+{
+    "cron": "* * * * *",
+    "notify": [
+        "john.doe@example.com"
+    ],
+    "monitors": [
+        {
+            "name": "GET all",
+            "endpoint": "http://localhost:8081/beer",
+            "method": "GET",
+            "expect": {
+                "status": 200
+            }
+        },
+        {
+            "name": "GET one",
+            "endpoint": "http://localhost:8081/beer/1",
+            "method": "GET",
+            "cron": "*/2 * * * *",
+            "expect": {
+                "status": 200,
+                "body": "{ \"data\": { name: \"Augustiner\" } }",
+                "headers": {
+                    "X-hello-world": "Hello World!"
+                }
+            }
+        },
+        {
+            "name": "GET one non-existing",
+            "endpoint": "http://localhost:8081/beer/-1",
+            "method": "GET",
+            "expect": {
+                "status": 404
+            }
+        },
+        {
+            "name": "GET one non-existing | fails",
+            "endpoint": "http://localhost:8081/beer/-1",
+            "method": "GET",
+            "expect": {
+                "status": 200
+            }
+        },
+        {
+            "name": "POST one",
+            "endpoint": "http://localhost:8081/beer",
+            "method": "POST",
+            "body": "{ name: \" Berg \" }",
+            "expect": {
+                "status": 200,
+                "body": "{ \"data\": { name: \"Berg\" } }",
+                "headers": {
+                    "X-hello": "World!",
+                    "X-world": "Hello"
+                }
+            }
+        },
+                {
+            "name": "POST one | fails",
+            "endpoint": "http://localhost:8081/whine",
+            "method": "PUT",
+            "body": "{ name: \" Berg \" }",
+            "notfiy": [
+                "breigroujaffeize-7333@yopmail.com"
+            ],
+            "expect": {
+                "status": 200,
+                "body": "{ \"data\": { name: \"Berg\" } }",
+                "headers": {
+                    "X-hello": "World!",
+                    "X-check": "ERROR"
+                }
+            }
+        },
+        {
+            "name": "DELETE one",
+            "endpoint": "http://localhost:8081/beer/1",
+            "method": "DELETE",
+            "expect": {
+                "status": 204
+            }
+        }
+    ]
+}

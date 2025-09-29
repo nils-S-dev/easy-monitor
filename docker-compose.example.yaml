@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    volumes:
+      # Mount config.json from host into /app/config.json in the container
+      - ./config.json:/app/config.json:ro
+    environment:
+      - PORT=8080
+      - SMTP_ENABLED=true
+      - SMTP_HOST=
+      - SMTP_PORT=
+      - SMTP_USER=
+      - SMTP_PASS=
+      - SMTP_FROM=
+    ports:
+      - "8000:8080"
