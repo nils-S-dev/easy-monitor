@@ -32,7 +32,6 @@
       <a href="#usage">Usage</a>
     </li>
     <li>
-    <li>
       <a href="#development">Development</a>
     </li>
     <li><a href="#contributing">Contributing</a></li>
